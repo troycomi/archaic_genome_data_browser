@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h2>{{ population.code}}: {{ population.name }}</h2>
+    <p>{{ population.description }}</p>
+    <p>Super Population: <a href="{{ url_for('main.super_population', id=population.super_population.id) }}">
+        {{ population.super_population.code }}: {{ population.super_population.name }}</a></p>
+    <h3>Samples ({{ population.samples.count() }})</h3>
+    <table class="table table-hover">
+        <tr>
+            <th>Sample</th>
+            <th>Family ID</th>
+            <th>Gender</th>
+            <th>Family Relationship</th>
+            <th>Other Comments</th>
+        </tr>
+        {% for sample in population.samples %}
+            <tr>
+                <td><a href="{{ url_for('main.sample', id=sample.id)}}">{{ sample.code }}</a></td>
+                <td><a href="">{{ sample.family_code }}</a></td>
+                <td>{{ sample.gender }}</td>
+                <td>{{ sample.family_relationship }}</td>
+                <td>{{ sample.comments }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

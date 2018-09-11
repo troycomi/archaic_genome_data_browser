@@ -1,0 +1,11 @@
+---
+name: Archaic Genome Data Browser
+description: Website and database to store, browse, and analyze archic genome data
+contact: Serena Tucci <stucci@princeton.edu>
+pi: Josh Akey <jakey@princeton.edu>
+lsi_staff: Lance Parsons <lparsons@princeton.edu>
+start_date: 2018-08-30
+completion_date: ""
+repository: https://bitbucket.org/ACCOUNT/PROJECT
+hostname: hostname.princeton.edu
+documentation: README.md

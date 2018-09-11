@@ -1,0 +1,15 @@
+name: archaic_genome_data_browser
+channels:
+    - bioconda
+    - conda-forge
+    - defaults
+dependencies:
+    - python>=3.6
+    - flask
+    - flask-wtf
+    - flask-sqlalchemy
+    - flask-migrate
+    - flask-bootstrap
+    - flask-moment
+    - python-dotenv
+    - python-dateutil

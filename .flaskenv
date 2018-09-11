@@ -1,0 +1,2 @@
+FLASK_APP=archaic_browser.py
+FLASK_ENV=development

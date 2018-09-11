@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h2>{{ sample.code }}</h2>
+    <p>Population: <a href="{{ url_for('main.population', id=sample.population.id) }}">
+        {{ sample.population.code }}: {{ sample.population.description }}</a></p>
+    <p>Super Population: <a href="{{ url_for('main.super_population', id=sample.population.super_population.id) }}">
+        {{ sample.population.super_population.code }}: {{ sample.population.super_population.name }}</a></p>
+    <dl>
+        <dt>Family ID</dt>
+        <dd><a href="">{{ sample.family_code }}</a></dd>
+        <dt>Gender</dt>
+        <dd>{{ sample.gender }}</dd>
+        <dt>Family Relationship</dt>
+        <dd>{{ sample.family_relationship }}</dd>
+        <dt>Other Comments</dt>
+        <dd>{{ sample.comments }}</dd>
+    </dl>
+{% endblock %}
