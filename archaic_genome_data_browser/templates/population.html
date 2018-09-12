@@ -5,7 +5,7 @@
     <p>{{ population.description }}</p>
     <p>Super Population: <a href="{{ url_for('main.super_population', id=population.super_population.id) }}">
         {{ population.super_population.code }}: {{ population.super_population.name }}</a></p>
-    <h3>Samples ({{ population.samples.count() }})</h3>
+    <h3>Samples ({{ population.sample_count }})</h3>
     <table class="table table-hover">
         <tr>
             <th>Sample</th>

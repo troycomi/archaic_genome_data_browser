@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h2>Super Populations</h2>
+    <h2>{{ archaic_analysis_run.name}}</h2>
+    <h3>Super Populations with run data</h3>
     <table class="table table-hover">
         <tr>
             <th>Code</th>
             <th>Name</th>
-            <th>Populations</th>
-            <th>Samples</th>
+            <th>Populations with run data</th>
+            <th>Samples with run data</th>
         </tr>
         {% for sp in super_populations %}
             <tr>
                 <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.code }}</a></td>
                 <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.name }}</a></td>
-                <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.population_count }}</a></td>
-                <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.sample_count }}</a></td>
+                <td><a href="">{{ sp.population_count }}</a></td>
+                <td><a href="">{{ sp.samples()|length }}</a></td>
             </tr>
         {% endfor %}
     </table>

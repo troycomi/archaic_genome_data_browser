@@ -1,8 +1,11 @@
 import csv
 import click
+import sys
 from archaic_genome_data_browser import db
 from archaic_genome_data_browser.models import (SuperPopulation, Population,
-                                                Sample)
+                                                Sample, ArchaicAnalysisRun,
+                                                ArchaicGenomeData,
+                                                get_one_or_create)
 
 
 def register(app):
@@ -46,7 +49,7 @@ def register(app):
         with open(file) as fh:
             csvreader = csv.DictReader(fh, delimiter='\t')
             for row in csvreader:
-                print(', '.join(row.values))
+                print(row)
                 p = Population.query.filter_by(code=row['Population']).first()
                 s = Sample(code=row['Sample'],
                            family_code=row["Family ID"],
@@ -55,4 +58,38 @@ def register(app):
                            comments=row["Other Comments"],
                            population=p)
                 db.session.add(s)
+        db.session.commit()
+
+    @load_data.command()
+    @click.argument('filename')
+    @click.argument('analysis_run_name')
+    def archaic_genome_data(filename, analysis_run_name):
+        """Import archaic genome analysis data for specified analysis run"""
+        analysis_run, created = get_one_or_create(
+            db.session, ArchaicAnalysisRun, name=analysis_run_name)
+        if created:
+            print("Created new Analysis Run {}".format(analysis_run))
+        db.session.add(analysis_run)
+        if analysis_run is None:
+            raise RuntimeError("Unable to find analysis run named '{}'".
+                               format(analysis_run_name))
+        print("Importing archaic genome data from '{}'".format(filename))
+        print("Using archaic analysis run: {}".format(analysis_run))
+        with open(filename) as file:
+            csvreader = csv.DictReader(file, delimiter=' ')
+            for row in csvreader:
+                print(row)
+                sample = Sample.query.filter_by(code=row['ind']).first()
+                if sample is None:
+                    sys.stderr.write("Unable to find sample '{}'\n".
+                                     format(row['ind']))
+                    continue
+                print(analysis_run)
+                print(sample)
+                genome_data = ArchaicGenomeData(
+                    sample=sample,
+                    archaic_analysis_run=analysis_run,
+                    neandertal_bp=row['neand'],
+                    denisovan_bp=row['den'])
+                db.session.add(genome_data)
         db.session.commit()

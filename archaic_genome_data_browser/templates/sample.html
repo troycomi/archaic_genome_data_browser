@@ -16,4 +16,27 @@
         <dt>Other Comments</dt>
         <dd>{{ sample.comments }}</dd>
     </dl>
+    <h3>Archaic Genome Data</h3>
+    <table class="table table-hover">
+        <tr>
+            <th>Archaic Analysis Run</th>
+            <th>Neadertal BPs</th>
+            <th>Neadertal Haplotypes</th>
+            <th>Neadertal SStar bed file</th>
+            <th>Denisovan BPs</th>
+            <th>Denisovan Haplotypes</th>
+            <th>Denisovan SStar bed file</th>
+        </tr>
+        {% for archaic_genome_data in sample.archaic_genome_data %}
+            <tr>
+                <td><a href="{{ url_for('main.archaic_analysis_run', id=archaic_genome_data.archaic_analysis_run.id) }}">{{ archaic_genome_data.archaic_analysis_run.name }}</a></td>
+                <td>{{ archaic_genome_data.neandertal_bp }}</a></td>
+                <td>{{ archaic_genome_data.neandertal_haplotypes }}</td>
+                <td>{{ archaic_genome_data.neandertal_sstar_bed }}</td>
+                <td>{{ archaic_genome_data.denisovan_bp }}</a></td>
+                <td>{{ archaic_genome_data.denisovan_haplotypes }}</td>
+                <td>{{ archaic_genome_data.denisovan_sstar_bed }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

@@ -15,7 +15,7 @@
                 <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.code }}</a></td>
                 <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.name }}</a></td>
                 <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.description }}</a></td>
-                <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.samples.count() }}</a></td>
+                <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.sample_count }}</a></td>
             </tr>
         {% endfor %}
     </table>
