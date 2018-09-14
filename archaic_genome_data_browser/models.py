@@ -2,6 +2,7 @@ from archaic_genome_data_browser import db
 from sqlalchemy.orm import column_property
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import select, func
 
 
@@ -83,6 +84,13 @@ class ArchaicAnalysisRun(db.Model):
                                           backref='archaic_analysis_run',
                                           lazy='dynamic')
 
+    @hybrid_property
+    def publication_url(self):
+        publication_url = None
+        if self.publication_doi is not None:
+            publication_url = "https://doi.org/{}".foramt(self.publication_doi)
+        return publication_url
+
     def __repr__(self):
         return '<ArchaicAnalysisRun {}>'.format(self.name)
 
@@ -110,11 +118,8 @@ class ArchaicGenomeData(db.Model):
             self.sample.code, self.archaic_analysis_run.name)
 
 
-def get_one_or_create(session,
-                      model,
-                      create_method='',
-                      create_method_kwargs=None,
-                      **kwargs):
+def get_one_or_create(session, model, create_method='',
+                      create_method_kwargs=None, **kwargs):
     try:
         return session.query(model).filter_by(**kwargs).one(), False
     except NoResultFound:
