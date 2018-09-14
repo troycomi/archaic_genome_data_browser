@@ -1,10 +1,12 @@
 import csv
 import click
 import sys
+import yaml
 from archaic_genome_data_browser import db
 from archaic_genome_data_browser.models import (SuperPopulation, Population,
                                                 Sample, ArchaicAnalysisRun,
-                                                ArchaicGenomeData,
+                                                ArchaicGenomeData, DataSource,
+                                                DigitalObjectIdentifier,
                                                 get_one_or_create)
 
 
@@ -13,6 +15,25 @@ def register(app):
     def load_data():
         """Load data into the database."""
         pass
+
+    @load_data.command()
+    @click.argument('yml_filename')
+    def data_source(yml_filename):
+        """Import data_sources from yml file."""
+        print("Importing data sources from '{}'".format(yml_filename))
+        with open(yml_filename) as yml_file:
+            data_sources_yaml = yaml.load(yml_file)
+            for data_source_yaml in data_sources_yaml['data_sources']:
+                data_source = DataSource(
+                    name=data_source_yaml['name'],
+                    description=data_source_yaml['description'])
+                db.session.add(data_source)
+                for doi_yaml in data_source_yaml['dois']:
+                    doi = DigitalObjectIdentifier(name=doi_yaml['name'],
+                                                  doi=doi_yaml['doi'])
+                    data_source.dois.append(doi)
+                    db.session.add(doi)
+        db.session.commit()
 
     @load_data.command()
     @click.argument('file')

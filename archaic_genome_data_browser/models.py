@@ -14,6 +14,7 @@ class Sample(db.Model):
     family_relationship = db.Column(db.String(128))
     comments = db.Column(db.Text)
     population_id = db.Column(db.Integer, db.ForeignKey('population.id'))
+    data_source_id = db.Column(db.Integer, db.ForeignKey('data_source.id'))
     archaic_genome_data = db.relationship('ArchaicGenomeData',
                                           backref='sample',
                                           lazy='dynamic')
@@ -29,6 +30,7 @@ class Population(db.Model):
     description = db.Column(db.String(256))
     super_population_id = db.Column(db.Integer,
                                     db.ForeignKey('super_population.id'))
+    data_source_id = db.Column(db.Integer, db.ForeignKey('data_source.id'))
     samples = db.relationship('Sample', backref='population', lazy='dynamic')
 
     sample_count = column_property(
@@ -45,6 +47,7 @@ class SuperPopulation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(32), index=True, unique=True)
     name = db.Column(db.String(128))
+    data_source_id = db.Column(db.Integer, db.ForeignKey('data_source.id'))
     populations = db.relationship('Population',
                                   backref='super_population',
                                   lazy='dynamic')
@@ -72,6 +75,44 @@ class SuperPopulation(db.Model):
 
     def __repr__(self):
         return '<Sample {}>'.format(self.code)
+
+
+data_source_doi_table = db.Table(
+    'data_source_doi', db.Model.metadata,
+    db.Column('doi_id', db.Integer,
+              db.ForeignKey('digital_object_identifier.id')),
+    db.Column('data_source_id', db.Integer, db.ForeignKey('data_source.id'))
+)
+
+
+class DataSource(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), index=True, unique=True)
+    description = db.Column(db.Text)
+    dois = db.relationship(
+        "DigitalObjectIdentifier",
+        secondary=data_source_doi_table,
+        backref=db.backref("data_sources", lazy=True)
+    )
+
+    def __repr__(self):
+        return '<DataSource {}>'.format(self.name)
+
+
+class DigitalObjectIdentifier(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), index=True, unique=True)
+    doi = db.Column(db.String(256), unique=True)
+
+    @hybrid_property
+    def url(self):
+        url = None
+        if self.doi is not None:
+            url = "https://doi.org/{}".format(self.doi)
+        return url
+
+    def __repr__(self):
+        return '<DOI {}>'.format(self.doi)
 
 
 class ArchaicAnalysisRun(db.Model):

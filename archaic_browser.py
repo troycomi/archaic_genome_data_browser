@@ -1,7 +1,9 @@
 from archaic_genome_data_browser import create_app, db, cli
 from archaic_genome_data_browser.models import (SuperPopulation, Population,
                                                 Sample, ArchaicAnalysisRun,
-                                                ArchaicGenomeData)
+                                                ArchaicGenomeData,
+                                                DigitalObjectIdentifier,
+                                                DataSource)
 
 app = create_app()
 cli.register(app)
@@ -12,4 +14,6 @@ def make_shell_context():
     return {'db': db, 'SuperPopulation': SuperPopulation,
             'Population': Population, 'Sample': Sample,
             'ArchaicAnalysisRun': ArchaicAnalysisRun,
-            'ArchaicGenomeData': ArchaicGenomeData}
+            'ArchaicGenomeData': ArchaicGenomeData,
+            'DataSource': DataSource,
+            'DigitalObjectIdentifier': DigitalObjectIdentifier}

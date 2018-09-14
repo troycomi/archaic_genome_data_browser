@@ -13,3 +13,4 @@ dependencies:
     - flask-moment
     - python-dotenv
     - python-dateutil
+    - pyyaml

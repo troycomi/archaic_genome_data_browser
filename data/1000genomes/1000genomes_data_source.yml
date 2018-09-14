@@ -1,0 +1,13 @@
+---
+data_sources:
+    - name: "1000 Genomes Project"
+      description: "IGSR: The International Genome Sample Resource"
+      dois:
+        - name: "\"A global reference for human genetic variation\" Nature 526 68-74 2015"
+          doi: "10.1038/nature15393"
+        - name: "\"An integrated map of structural variation in 2,504 human genomes\" Nature 526 75-81 2015"
+          doi: "10.1038/nature15394"
+        - name: "\"An integrated map of genetic variation from 1,092 human genomes\" Nature 491 56-65 2012"
+          doi: "10.1038/nature11632"
+        - name: "\"A map of human genome variation from population-scale sequencing\" Nature 467 1061-1073 2010"
+          doi: "10.1038/nature09534"
