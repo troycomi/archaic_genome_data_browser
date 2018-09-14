@@ -94,6 +94,18 @@ class DataSource(db.Model):
         secondary=data_source_doi_table,
         backref=db.backref("data_sources", lazy=True)
     )
+    super_populations = db.relationship(
+        "SuperPopulation",
+        backref=db.backref("data_source", lazy=True)
+    )
+    popoulations = db.relationship(
+        "Population",
+        backref=db.backref("data_source", lazy=True)
+    )
+    samples = db.relationship(
+        "Sample",
+        backref=db.backref("data_source", lazy=True)
+    )
 
     def __repr__(self):
         return '<DataSource {}>'.format(self.name)

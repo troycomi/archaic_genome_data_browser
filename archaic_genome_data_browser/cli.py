@@ -37,28 +37,35 @@ def register(app):
 
     @load_data.command()
     @click.argument('file')
-    def superpopulations(file):
+    @click.argument('data_source_name')
+    def superpopulations(file, data_source_name):
         """Import superpopulations from tsv file."""
         print("Importing super populations from '{}'".format(file))
+        data_source = DataSource.query.filter_by(name=data_source_name).one()
+        print("Using data source: {}".format(data_source))
         with open(file) as fh:
             csvreader = csv.reader(fh, delimiter='\t')
             for row in csvreader:
                 print(', '.join(row))
-                db.session.add(SuperPopulation(code=row[1], name=row[0]))
+                db.session.add(SuperPopulation(code=row[1], name=row[0],
+                                               data_source=data_source))
         db.session.commit()
 
     @load_data.command()
     @click.argument('file')
-    def populations(file):
+    @click.argument('data_source_name')
+    def populations(file, data_source_name):
         """Import populations from tsv file."""
         print("Importing populations from '{}'".format(file))
+        data_source = DataSource.query.filter_by(name=data_source_name).one()
+        print("Using data source: {}".format(data_source))
         with open(file) as fh:
             csvreader = csv.reader(fh, delimiter='\t')
             for row in csvreader:
                 print(', '.join(row))
-                sp = SuperPopulation.query.filter_by(code=row[3]).first()
+                sp = SuperPopulation.query.filter_by(code=row[3]).one()
                 p = Population(code=row[0], name=row[1], description=row[2],
-                               super_population=sp)
+                               super_population=sp, data_source=data_source)
                 db.session.add(p)
         db.session.commit()
 
