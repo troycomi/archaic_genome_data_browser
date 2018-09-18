@@ -1,7 +1,8 @@
-ex{% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block app_content %}
     <h2>{{ super_population.code}}: {{ super_population.name }}</h2>
+    <p>{{ super_population.data_source.name }} - {{ super_population.data_source.description }}</p>
     <h3>Populations</h3>
     <table class="table table-hover">
         <tr>

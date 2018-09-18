@@ -3,15 +3,17 @@ from archaic_genome_data_browser.main import bp
 from archaic_genome_data_browser.main.forms import LoginForm
 from archaic_genome_data_browser.models import (SuperPopulation, Population,
                                                 Sample, ArchaicAnalysisRun,
-                                                ArchaicGenomeData)
+                                                ArchaicGenomeData, DataSource)
 
 
 @bp.route('/')
 @bp.route('/index')
 def index():
-    super_populations = SuperPopulation.query.all()
-    return render_template('index.html', title='Home',
-                           super_populations=super_populations)
+    super_population_data_sources = (
+        DataSource.query.join(SuperPopulation).all())
+    return render_template(
+        'index.html', title='Home',
+        super_population_data_sources=super_population_data_sources)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -55,10 +57,17 @@ def sample(id):
 def archaic_analysis_run(id):
     archaic_analysis_run = \
         ArchaicAnalysisRun.query.filter_by(id=id).first_or_404()
-    super_populations = SuperPopulation.query.join(Population).join(Sample).\
+    populations_query = Population.query.\
+        join(Sample).\
         join(ArchaicGenomeData).\
         filter(ArchaicGenomeData.archaic_analysis_run_id == id)
+    # super_populations_query = SuperPopulation.query.join(
+    #     populations_query.subquery(),
+    #     SuperPopulation.populations)
+    # super_populations_with_data = super_populations_query.all()
+    populations_with_data = populations_query.all()
+
     return render_template('archaic_analysis_run.html',
                            title=archaic_analysis_run.name,
                            archaic_analysis_run=archaic_analysis_run,
-                           super_populations=super_populations)
+                           populations=populations_with_data)

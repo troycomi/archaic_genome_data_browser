@@ -45,6 +45,13 @@ class Population(db.Model):
         correlate_except(Sample)
     )
 
+    def samples_with_data_from_run(self, archaic_analysis_run_id):
+        return Sample.query.join(ArchaicGenomeData).\
+            join(ArchaicAnalysisRun).\
+            join(Population).\
+            filter(ArchaicAnalysisRun.id == archaic_analysis_run_id).\
+            filter(Population.id == self.id).all()
+
     def __repr__(self):
         return '<Population {}>'.format(self.code)
 
@@ -94,7 +101,7 @@ class SuperPopulation(db.Model):
     # )
 
     def __repr__(self):
-        return '<Sample {}>'.format(self.code)
+        return '<SuperPopulation {}>'.format(self.code)
 
 
 data_source_doi_table = db.Table(

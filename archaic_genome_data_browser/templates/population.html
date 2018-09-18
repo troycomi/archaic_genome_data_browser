@@ -3,8 +3,11 @@
 {% block app_content %}
     <h2>{{ population.code}}: {{ population.name }}</h2>
     <p>{{ population.description }}</p>
-    <p>Super Population: <a href="{{ url_for('main.super_population', id=population.super_population.id) }}">
-        {{ population.super_population.code }}: {{ population.super_population.name }}</a></p>
+    <p>Population Groups:</p>
+        {% for super_population in population.super_populations %}
+            <p><a href="{{ url_for('main.super_population', id=super_population.id) }}">
+                {{ super_population.code }}: {{ super_population.name }}</a> - {{ super_population.data_source.name }}</p>
+        {% endfor %}
     <h3>Samples ({{ population.sample_count }})</h3>
     <table class="table table-hover">
         <tr>

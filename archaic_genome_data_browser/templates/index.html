@@ -1,21 +1,26 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h2>Super Populations</h2>
-    <table class="table table-hover">
-        <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Populations</th>
-            <th>Samples</th>
-        </tr>
-        {% for sp in super_populations %}
+    <h2>Population Groupings</h2>
+    {% for data_source in super_population_data_sources %}
+        <h3>{{ data_source.name }}</h3>
+        <p>{{ data_source.description }}</p>
+        <h4>Super Populations</h4>
+        <table class="table table-hover">
             <tr>
-                <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.code }}</a></td>
-                <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.name }}</a></td>
-                <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.population_count }}</a></td>
-                <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.sample_count }}</a></td>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Populations</th>
+                <th>Samples</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for sp in data_source.super_populations %}
+                <tr>
+                    <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.code }}</a></td>
+                    <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.name }}</a></td>
+                    <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.population_count }}</a></td>
+                    <td><a href="{{ url_for('main.super_population', id=sp.id)}}">{{ sp.sample_count }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
 {% endblock %}
