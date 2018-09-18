@@ -1,0 +1,30 @@
+code	name	description	geographic_region
+CHB	Han Chinese	Han Chinese in Beijing, China	ASIA
+JPT	Japanese	Japanese in Tokyo, Japan	ASIA
+CHS	Southern Han Chinese	Han Chinese South	ASIA
+CDX	Dai Chinese	Chinese Dai in Xishuangbanna, China	ASIA
+KHV	Kinh Vietnamese	Kinh in Ho Chi Minh City, Vietnam	ASIA
+CHD	Denver Chinese	Chinese in Denver, Colorado	ASIA
+CEU	CEPH	Utah residents (CEPH) with Northern and Western European ancestry	EURP
+TSI	Tuscan	Toscani in Italia	EURP
+GBR	British	British in England and Scotland	EURP
+FIN	Finnish	Finnish in Finland	EURP
+IBS	Spanish	Iberian populations in Spain	EURP
+YRI	Yoruba	Yoruba in Ibadan, Nigeria	AFRC
+LWK	Luhya	Luhya in Webuye, Kenya	AFRC
+GWD	Gambian	Gambian in Western Division, The Gambia	AFRC
+MSL	Mende	Mende in Sierra Leone	AFRC
+ESN	Esan	Esan in Nigeria	AFRC
+ASW	African-American SW	African Ancestry in Southwest US	AFRC
+ACB	African-Caribbean	African Caribbean in Barbados	AFRC
+MXL	Mexican-American	Mexican Ancestry in Los Angeles, California	AMER
+PUR	Puerto Rican	Puerto Rican in Puerto Rico	AMER
+CLM	Colombian	Colombian in Medellin, Colombia	AMER
+PEL	Peruvian	Peruvian in Lima, Peru	AMER
+GIH	Gujarati	Gujarati Indian in Houston, TX	OCEA
+PJL	Punjabi	Punjabi in Lahore, Pakistan	OCEA
+BEB	Bengali	Bengali in Bangladesh	OCEA
+STU	Sri Lankan	Sri Lankan Tamil in the UK	OCEA
+ITU	Indian	Indian Telugu in the UK	OCEA
+RPS	RPS	RPS	AFRC
+PNG	PNG	PNG	AFRC
