@@ -33,11 +33,11 @@
         {% for archaic_genome_data in sample.archaic_genome_data %}
             <tr>
                 <td><a href="{{ url_for('main.archaic_analysis_run', id=archaic_genome_data.archaic_analysis_run.id) }}">{{ archaic_genome_data.archaic_analysis_run.name }}</a></td>
-                <td>{{ archaic_genome_data.neandertal_bp }}</a></td>
-                <td>{{ archaic_genome_data.neandertal_haplotypes }}</td>
+                <td>{% if archaic_genome_data.neandertal_bp %}{{ "{:,}".format(archaic_genome_data.neandertal_bp) }}{% endif %}</a></td>
+                <td>{% if archaic_genome_data.neandertal_haplotypes %}{{ "{:,}".format(archaic_genome_data.neandertal_haplotypes) }}{% endif %}</td>
                 <td>{{ archaic_genome_data.neandertal_sstar_bed }}</td>
-                <td>{{ archaic_genome_data.denisovan_bp }}</a></td>
-                <td>{{ archaic_genome_data.denisovan_haplotypes }}</td>
+                <td>{% if archaic_genome_data.denisovan_bp %}{{ "{:,}".format(archaic_genome_data.denisovan_bp) }}</a>{% endif %}</td>
+                <td>{% if archaic_genome_data.denisovan_haplotypes %}{{ "{:,}".format(archaic_genome_data.denisovan_haplotypes) }}{% endif %}</td>
                 <td>{{ archaic_genome_data.denisovan_sstar_bed }}</td>
             </tr>
         {% endfor %}

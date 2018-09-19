@@ -45,12 +45,36 @@ class Population(db.Model):
         correlate_except(Sample)
     )
 
-    def samples_with_data_from_run(self, archaic_analysis_run_id):
+    @property
+    def archaic_analysis_runs(self):
+        return ArchaicAnalysisRun.query.\
+            join(ArchaicGenomeData).join(Sample).join(Population).\
+            filter(Population.id == self.id).all()
+
+    def archaic_genome_data_for_run_query(self, archaic_analysis_run_id):
+        return ArchaicGenomeData.query.join(ArchaicAnalysisRun).\
+            join(Sample).join(Population).filter(Population.id == self.id).\
+            filter(ArchaicAnalysisRun.id == archaic_analysis_run_id)
+
+    def archaic_genome_data_for_run(self, archaic_analysis_run_id):
+        return self.archaic_genome_data_for_run_query(
+            archaic_analysis_run_id=archaic_analysis_run_id).all()
+
+    def samples_with_data_for_run_query(self, archaic_analysis_run_id):
         return Sample.query.join(ArchaicGenomeData).\
             join(ArchaicAnalysisRun).\
             join(Population).\
             filter(ArchaicAnalysisRun.id == archaic_analysis_run_id).\
-            filter(Population.id == self.id).all()
+            filter(Population.id == self.id)
+
+    def samples_with_data_for_run(self, archaic_analysis_run_id):
+        return self.samples_with_data_for_run_query(
+            archaic_analysis_run_id=archaic_analysis_run_id).all()
+
+    def avg_archaic_genome_stats(self, archaic_analysis_run_id):
+        stmt = self.archaic_genome_data_for_run_query(
+            archaic_analysis_run_id).subquery()
+        return archaic_genome_stats_avg(stmt)
 
     def __repr__(self):
         return '<Population {}>'.format(self.code)
@@ -217,3 +241,16 @@ def get_one_or_create(session, model, create_method='',
         except IntegrityError:
             session.rollback()
             return session.query(model).filter_by(**kwargs).one(), False
+
+
+def archaic_genome_stats_avg(stmt):
+    '''Return avg archaic genome stats for genome data in stmt subquery'''
+    return db.session.query(func.avg(ArchaicGenomeData.neandertal_bp).
+                            label('neandertal_bp_avg'),
+                            func.avg(ArchaicGenomeData.denisovan_bp).
+                            label('denisovan_bp_avg'),
+                            func.avg(ArchaicGenomeData.neandertal_haplotypes).
+                            label('neandertal_haplotypes_avg'),
+                            func.avg(ArchaicGenomeData.denisovan_haplotypes).
+                            label('denisovan_haplotypes_avg')).\
+        join(stmt, ArchaicGenomeData.id == stmt.c.id).one()
