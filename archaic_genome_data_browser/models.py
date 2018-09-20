@@ -3,7 +3,7 @@ from sqlalchemy.orm import column_property
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy import select, func
+from sqlalchemy import select, func, inspect
 
 
 class Sample(db.Model):
@@ -254,3 +254,8 @@ def archaic_genome_stats_avg(stmt):
                             func.avg(ArchaicGenomeData.denisovan_haplotypes).
                             label('denisovan_haplotypes_avg')).\
         join(stmt, ArchaicGenomeData.id == stmt.c.id).one()
+
+
+def object_as_dict(obj):
+    return {c.key: getattr(obj, c.key)
+            for c in inspect(obj).mapper.column_attrs}
