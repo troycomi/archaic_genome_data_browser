@@ -7,14 +7,21 @@ from archaic_genome_data_browser.models import (SuperPopulation, Population,
                                                 ArchaicGenomeData, DataSource)
 
 
-@bp.route('/')
-@bp.route('/index')
-def index():
-    super_population_data_sources = (
-        DataSource.query.join(SuperPopulation).all())
+@bp.route('/', defaults={'super_population_data_source_id': 2})
+@bp.route('/index/', defaults={'super_population_data_source_id': 2})
+@bp.route('/index/<super_population_data_source_id>')
+def index(super_population_data_source_id):
+    selected_data_source = (
+        DataSource.query.join(SuperPopulation).
+        filter(DataSource.id == super_population_data_source_id).first_or_404()
+    )
+    other_data_sources = (
+        DataSource.query.join(SuperPopulation).
+        filter(DataSource.id != super_population_data_source_id)).all()
     return render_template(
         'index.html', title='Home',
-        super_population_data_sources=super_population_data_sources)
+        other_data_sources=other_data_sources,
+        selected_data_source=selected_data_source)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
