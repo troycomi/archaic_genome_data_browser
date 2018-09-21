@@ -72,12 +72,11 @@ def register(app):
                     super_population_code = row['geographic_region']
                 sp = SuperPopulation.query.filter_by(
                     code=super_population_code).one()
-                # p = Population(code=row['code'], name=row['name'],
-                #                description=row['description'],
-                #                super_population=sp, data_source=data_source)
                 p, created = get_one_or_create(
                     db.session, Population, code=row['code'], name=row['name'],
-                    description=row['description'])
+                    description=row['description'],
+                    latitude=float(row['latitude']),
+                    longitude=float(row['longitude']))
                 if created:
                     p.data_source = data_source
                 p.super_populations.append(sp)

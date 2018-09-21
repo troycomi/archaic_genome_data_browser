@@ -1,28 +1,28 @@
-code	name	description	geographic_region
-CHB	Han Chinese	Han Chinese in Beijing, China	EAS
-JPT	Japanese	Japanese in Tokyo, Japan	EAS
-CHS	Southern Han Chinese	Han Chinese South	EAS
-CDX	Dai Chinese	Chinese Dai in Xishuangbanna, China	EAS
-KHV	Kinh Vietnamese	Kinh in Ho Chi Minh City, Vietnam	EAS
-CHD	Denver Chinese	Chinese in Denver, Colorado	EAS
-CEU	CEPH	Utah residents (CEPH) with Northern and Western European ancestry	EUR
-TSI	Tuscan	Toscani in Italia	EUR
-GBR	British	British in England and Scotland	EUR
-FIN	Finnish	Finnish in Finland	EUR
-IBS	Spanish	Iberian populations in Spain	EUR
-YRI	Yoruba	Yoruba in Ibadan, Nigeria	AFR
-LWK	Luhya	Luhya in Webuye, Kenya	AFR
-GWD	Gambian	Gambian in Western Division, The Gambia	AFR
-MSL	Mende	Mende in Sierra Leone	AFR
-ESN	Esan	Esan in Nigeria	AFR
-ASW	African-American SW	African Ancestry in Southwest US	AFR
-ACB	African-Caribbean	African Caribbean in Barbados	AFR
-MXL	Mexican-American	Mexican Ancestry in Los Angeles, California	AMR
-PUR	Puerto Rican	Puerto Rican in Puerto Rico	AMR
-CLM	Colombian	Colombian in Medellin, Colombia	AMR
-PEL	Peruvian	Peruvian in Lima, Peru	AMR
-GIH	Gujarati	Gujarati Indian in Houston, TX	SAS
-PJL	Punjabi	Punjabi in Lahore, Pakistan	SAS
-BEB	Bengali	Bengali in Bangladesh	SAS
-STU	Sri Lankan	Sri Lankan Tamil in the UK	SAS
-ITU	Indian	Indian Telugu in the UK	SAS
+code	name	description	geographic_region	latitude	longitude
+CHB	Han Chinese	Han Chinese in Beijing, China	EAS	39.75	116.25
+JPT	Japanese	Japanese in Tokyo, Japan	EAS	35.25	139.25
+CHS	Southern Han Chinese	Han Chinese South	EAS	22.25	114.25
+CDX	Dai Chinese	Chinese Dai in Xishuangbanna, China	EAS	22.25	100.25
+KHV	Kinh Vietnamese	Kinh in Ho Chi Minh City, Vietnam	EAS	10.25	106.25
+CHD	Denver Chinese	Chinese in Denver, Colorado	EAS	39.73845	-104.98485
+CEU	CEPH	Utah residents (CEPH) with Northern and Western European ancestry	EUR	50.75	4.25
+TSI	Tuscan	Toscani in Italia	EUR	43.25	11.25
+GBR	British	British in England and Scotland	EUR	54.75	-1.25
+FIN	Finnish	Finnish in Finland	EUR	60.25	24.75
+IBS	Spanish	Iberian populations in Spain	EUR	40.25	-3.25
+YRI	Yoruba	Yoruba in Ibadan, Nigeria	AFR	7.25	3.75
+LWK	Luhya	Luhya in Webuye, Kenya	AFR	0.75	34.75
+GWD	Gambian	Gambian in Western Division, The Gambia	AFR	13.25	-16.25
+MSL	Mende	Mende in Sierra Leone	AFR	7.75	-11.25
+ESN	Esan	Esan in Nigeria	AFR	6.75	6.25
+ASW	African-American SW	African Ancestry in Southwest US	AFR	35.221996	-101.831299
+ACB	African-Caribbean	African Caribbean in Barbados	AFR	13.193887	-59.543198
+MXL	Mexican-American	Mexican Ancestry in Los Angeles, California	AMR	34.052238	-118.24334
+PUR	Puerto Rican	Puerto Rican in Puerto Rico	AMR	18.19976	-66.583633
+CLM	Colombian	Colombian in Medellin, Colombia	AMR	6.244203	-75.581215
+PEL	Peruvian	Peruvian in Lima, Peru	AMR	-12.046373	-77.042755
+GIH	Gujarati	Gujarati Indian in Houston, TX	SAS	23.25	72.75
+PJL	Punjabi	Punjabi in Lahore, Pakistan	SAS	31.25	74.25
+BEB	Bengali	Bengali in Bangladesh	SAS	23.25	90.25
+STU	Sri Lankan	Sri Lankan Tamil in the UK	SAS	9.25	80.25
+ITU	Indian	Indian Telugu in the UK	SAS	16.75	80.75

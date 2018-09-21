@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-flask load_data superpopulations data/1000genomes/superpopulations.tsv
+flask db upgrade
 
-flask load_data populations data/1000genomes/populations.tsv
+./data/load_sample_data_1000genomes.sh
 
-flask load_data samples data/1000genomes/20130606_sample_info.txt
+./data/load_sample_data_tucci2018.sh
 
-flask load_data archaic_genome_data data/vernot2016/ALL.amount.n.d.ambig.null.per_ind_Nov9.txt Vernot2016
+./data/load_analysis_run_tucci_20180915.sh

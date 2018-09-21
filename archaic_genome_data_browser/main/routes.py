@@ -86,8 +86,8 @@ def population_data(archaic_analysis_run_id):
             'type': 'Feature',
             'geometry': {
                 'type': 'Point',
-                'coordinates': [random.randint(-180, 180),
-                                random.randint(-90, 90)]
+                'coordinates': [population.longitude,
+                                population.latitude]
             },
             'properties': {
                 'name': population.name,

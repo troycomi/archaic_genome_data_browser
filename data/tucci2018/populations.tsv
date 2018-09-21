@@ -1,30 +1,40 @@
-code	name	description	geographic_region
-CHB	Han Chinese	Han Chinese in Beijing, China	ASIA
-JPT	Japanese	Japanese in Tokyo, Japan	ASIA
-CHS	Southern Han Chinese	Han Chinese South	ASIA
-CDX	Dai Chinese	Chinese Dai in Xishuangbanna, China	ASIA
-KHV	Kinh Vietnamese	Kinh in Ho Chi Minh City, Vietnam	ASIA
-CHD	Denver Chinese	Chinese in Denver, Colorado	ASIA
-CEU	CEPH	Utah residents (CEPH) with Northern and Western European ancestry	EURP
-TSI	Tuscan	Toscani in Italia	EURP
-GBR	British	British in England and Scotland	EURP
-FIN	Finnish	Finnish in Finland	EURP
-IBS	Spanish	Iberian populations in Spain	EURP
-YRI	Yoruba	Yoruba in Ibadan, Nigeria	AFRC
-LWK	Luhya	Luhya in Webuye, Kenya	AFRC
-GWD	Gambian	Gambian in Western Division, The Gambia	AFRC
-MSL	Mende	Mende in Sierra Leone	AFRC
-ESN	Esan	Esan in Nigeria	AFRC
-ASW	African-American SW	African Ancestry in Southwest US	AFRC
-ACB	African-Caribbean	African Caribbean in Barbados	AFRC
-MXL	Mexican-American	Mexican Ancestry in Los Angeles, California	AMER
-PUR	Puerto Rican	Puerto Rican in Puerto Rico	AMER
-CLM	Colombian	Colombian in Medellin, Colombia	AMER
-PEL	Peruvian	Peruvian in Lima, Peru	AMER
-GIH	Gujarati	Gujarati Indian in Houston, TX	OCEA
-PJL	Punjabi	Punjabi in Lahore, Pakistan	OCEA
-BEB	Bengali	Bengali in Bangladesh	OCEA
-STU	Sri Lankan	Sri Lankan Tamil in the UK	OCEA
-ITU	Indian	Indian Telugu in the UK	OCEA
-RPS	RPS	RPS	AFRC
-PNG	PNG	PNG	AFRC
+code	name	description	geographic_region	latitude	longitude
+CHB	Han Chinese	Han Chinese in Beijing, China	ASIA	39.75	116.25
+JPT	Japanese	Japanese in Tokyo, Japan	ASIA	35.25	139.25
+CHS	Southern Han Chinese	Han Chinese South	ASIA	22.25	114.25
+CDX	Dai Chinese	Chinese Dai in Xishuangbanna, China	ASIA	22.25	100.25
+KHV	Kinh Vietnamese	Kinh in Ho Chi Minh City, Vietnam	ASIA	10.25	106.25
+CHD	Denver Chinese	Chinese in Denver, Colorado	ASIA	39.73845	-104.98485
+CEU	CEPH	Utah residents (CEPH) with Northern and Western European ancestry	EURP	50.75	4.25
+TSI	Tuscan	Toscani in Italia	EURP	43.25	11.25
+GBR	British	British in England and Scotland	EURP	54.75	-1.25
+FIN	Finnish	Finnish in Finland	EURP	60.25	24.75
+IBS	Spanish	Iberian populations in Spain	EURP	40.25	-3.25
+YRI	Yoruba	Yoruba in Ibadan, Nigeria	AFRC	7.25	3.75
+LWK	Luhya	Luhya in Webuye, Kenya	AFRC	0.75	34.75
+GWD	Gambian	Gambian in Western Division, The Gambia	AFRC	13.25	-16.25
+MSL	Mende	Mende in Sierra Leone	AFRC	7.75	-11.25
+ESN	Esan	Esan in Nigeria	AFRC	6.75	6.25
+ASW	African-American SW	African Ancestry in Southwest US	AFRC	35.221996	-101.831299
+ACB	African-Caribbean	African Caribbean in Barbados	AFRC	13.193887	-59.543198
+MXL	Mexican-American	Mexican Ancestry in Los Angeles, California	AMER	34.052238	-118.24334
+PUR	Puerto Rican	Puerto Rican in Puerto Rico	AMER	18.19976	-66.583633
+CLM	Colombian	Colombian in Medellin, Colombia	AMER	6.244203	-75.581215
+PEL	Peruvian	Peruvian in Lima, Peru	AMER	-12.046373	-77.042755
+GIH	Gujarati	Gujarati Indian in Houston, TX	ASIA	23.25	72.75
+PJL	Punjabi	Punjabi in Lahore, Pakistan	ASIA	31.25	74.25
+BEB	Bengali	Bengali in Bangladesh	ASIA	23.25	90.25
+STU	Sri Lankan	Sri Lankan Tamil in the UK	ASIA	9.25	80.25
+ITU	Indian	Indian Telugu in the UK	ASIA	16.75	80.75
+RPS	Rampasasa	Rampasasa in Indonesia	ASIA	-8.31	120.26
+PNG	Papua New Guinea	Papua New Guinea	OCEA	-6.314993	143.955551
+BAI	Baining	Baining in Papua New Guinea	OCEA	-4.51619	151.99585
+NAK	Nakanai	Nakanai in Papua New Guinea	OCEA	-5.703448	150.839539
+MAM	Mamusi	Mamusi in Papua New Guinea	OCEA	-5.872868	150.968628
+ATA	Ata	Ata in Papua New Guinea	OCEA	-5.566783	151.034546
+MEL	Melamala	Melamala in Papua New Guinea	OCEA	-5.019	151.331177
+MAN	Mangseng	Mangseng in Papua New Guinea	OCEA	-6.020385	150.584106
+PAS	Pasismanua	Pasismanua in Papua New Guinea	OCEA	-6.274348	150.088348
+LAV	Lavongai	Lavongai in Papua New Guinea	OCEA	-2.534268	150.26825
+MUS	Mussau	Mussau in Papua New Guinea	OCEA	-1.58	149.73
+NAL	Nailik	Nailik in Papua New Guinea	OCEA	-2.943041	151.303711

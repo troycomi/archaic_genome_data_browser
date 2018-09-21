@@ -36,6 +36,8 @@ class Population(db.Model):
     code = db.Column(db.String(32), index=True, unique=True)
     name = db.Column(db.String(128), unique=True)
     description = db.Column(db.String(256))
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
     data_source_id = db.Column(db.Integer, db.ForeignKey('data_source.id'))
     samples = db.relationship('Sample', backref='population', lazy='dynamic')
 
