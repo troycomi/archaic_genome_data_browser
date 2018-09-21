@@ -1,6 +1,6 @@
-name	code
-East Asian	EAS
-South Asian	SAS
-African	AFR
-European	EUR
-American	AMR
+name	code	color
+East Asian	EAS	#855C75
+South Asian	SAS	#D9AF6B
+African	AFR	#AF6458
+European	EUR	#736F4C
+American	AMR	#7C7C7C

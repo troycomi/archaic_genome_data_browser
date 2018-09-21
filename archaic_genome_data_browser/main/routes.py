@@ -1,10 +1,10 @@
 from flask import render_template, flash, redirect, url_for, jsonify
+from archaic_genome_data_browser import db
 from archaic_genome_data_browser.main import bp
 from archaic_genome_data_browser.main.forms import LoginForm
 from archaic_genome_data_browser.models import (SuperPopulation, Population,
                                                 Sample, ArchaicAnalysisRun,
                                                 ArchaicGenomeData, DataSource)
-import random
 
 
 @bp.route('/')
@@ -74,14 +74,17 @@ def archaic_analysis_run(id):
                            populations=populations_with_data)
 
 
-@bp.route('/population_data/<archaic_analysis_run_id>')
-def population_data(archaic_analysis_run_id):
-    populations = Population.query.all()
+@bp.route('/population_data/<super_population_data_source_id>')
+def population_data(super_population_data_source_id):
+    pop_superpops = db.session.query(Population, SuperPopulation).\
+        join(SuperPopulation, Population.super_populations).\
+        filter(SuperPopulation.data_source_id
+               == super_population_data_source_id).all()
     geojson = {
         'type': 'FeatureCollection',
         'features': []
     }
-    for population in populations:
+    for (population, super_population) in pop_superpops:
         geojson['features'].append({
             'type': 'Feature',
             'geometry': {
@@ -93,7 +96,7 @@ def population_data(archaic_analysis_run_id):
                 'name': population.name,
                 'description': population.description,
                 'url': url_for('main.population', id=population.id),
-                'color': '#A00'
+                'color': super_population.color
             },
         })
     return jsonify(geojson)

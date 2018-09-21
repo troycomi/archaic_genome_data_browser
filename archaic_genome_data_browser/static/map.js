@@ -1,15 +1,16 @@
-var mymap = L.map('mapid').setView([10, 0], 2);
+var mymap = L.map('mapid').fitWorld({ animate: false }).zoomIn(1, { animate: false });
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
+    noWrap: true,
     id: 'mapbox.outdoors',
     accessToken: 'pk.eyJ1IjoibHBhcnNvbnMiLCJhIjoiY2ptYXJtaWlmMW92YzNwcXFjdW5uZ2d4cCJ9.C_9_7EWGRR5zKOQfzSpx9g'
 }).addTo(mymap);
 
 var geojsonMarkerOptions = {
     radius: 8,
-    fillColor: "#ff7800",
+    fillColor: "#333333",
     color: "#000",
     weight: 1,
     opacity: 1,
@@ -39,7 +40,7 @@ xhr.onload = function() {
             },
             onEachFeature: onEachFeature,
             style: function (feature) {
-                return {color: feature.properties.color};
+                return {fillColor: feature.properties.color};
             }
         // }).bindPopup(function (layer) {
         //     return layer.feature.properties.description;
@@ -47,3 +48,7 @@ xhr.onload = function() {
     }
 };
 xhr.send();
+
+mymap.on('resize', function(e) {
+    mymap.fitWorld({reset: true, animate: false}).zoomIn(1, { animate: false });
+});

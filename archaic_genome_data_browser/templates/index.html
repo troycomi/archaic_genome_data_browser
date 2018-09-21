@@ -10,8 +10,9 @@
 {% endblock %}
 
 {% block app_content %}
-    <h2>Map</h2>
-     <div id="mapid"></div>
+    <h2>Sample Populations</h2>
+        <form
+        <div id="mapid"></div>
     <h2>Population Groupings</h2>
     {% for data_source in super_population_data_sources %}
         <h3>{{ data_source.name }}</h3>
@@ -39,7 +40,7 @@
       integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
       crossorigin=""></script>
     <script>
-        var data_url = '{{ url_for('main.population_data', archaic_analysis_run_id=1) }}'
+        var data_url = '{{ url_for('main.population_data', super_population_data_source_id=2) }}'
     </script>
     <script src="{{url_for('static', filename='map.js')}}"></script>
 {% endblock %}

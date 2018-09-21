@@ -1,8 +1,8 @@
-"""Initial data model
+"""Basic model
 
-Revision ID: f75a9ac50ec3
+Revision ID: f082c344412b
 Revises: 
-Create Date: 2018-09-18 11:28:58.284410
+Create Date: 2018-09-21 15:42:58.310266
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f75a9ac50ec3'
+revision = 'f082c344412b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,6 +55,8 @@ def upgrade():
     sa.Column('code', sa.String(length=32), nullable=True),
     sa.Column('name', sa.String(length=128), nullable=True),
     sa.Column('description', sa.String(length=256), nullable=True),
+    sa.Column('latitude', sa.Float(), nullable=True),
+    sa.Column('longitude', sa.Float(), nullable=True),
     sa.Column('data_source_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['data_source_id'], ['data_source.id'], ),
     sa.PrimaryKeyConstraint('id'),
@@ -65,6 +67,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('code', sa.String(length=32), nullable=True),
     sa.Column('name', sa.String(length=128), nullable=True),
+    sa.Column('color', sa.String(length=32), nullable=True),
     sa.Column('data_source_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['data_source_id'], ['data_source.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -86,6 +86,7 @@ class SuperPopulation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(32), index=True, unique=True)
     name = db.Column(db.String(128))
+    color = db.Column(db.String(32))
     data_source_id = db.Column(db.Integer, db.ForeignKey('data_source.id'))
     populations = db.relationship('Population',
                                   secondary=population_group_table,
@@ -106,25 +107,11 @@ class SuperPopulation(db.Model):
         return db.Session.object_session(self).\
             query(Population).with_parent(self, "populations").count()
 
-    # population_count = column_property(
-    #     select([func.count(population_group_table.population_id)]).
-    #     select_from(population_group_table.join(Population.__table__)).
-    #     where(population_group_table.super_population_id == id).
-    #     correlate_except(Population)
-    # )
-
     @property
     def sample_count(self):
         return db.Session.object_session(self).\
             query(Sample).join(Population).\
             with_parent(self, "populations").count()
-
-    # sample_count = column_property(
-    #     select([func.count(Sample.id)]).
-    #     select_from(Population.__table__.join(Sample.__table__)).
-    #     where(Population.super_population_id == id).
-    #     correlate_except(Sample)
-    # )
 
     def __repr__(self):
         return '<SuperPopulation {}>'.format(self.code)

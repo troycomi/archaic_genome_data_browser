@@ -1,6 +1,6 @@
-name	code
-Africa	AFRC
-Europe	EURP
-Asia	ASIA
-Oceania	OCEA
-America	AMER
+name	code	color
+Asia	ASIA	#855C75
+Oceania	OCEA	#D9AF6B
+Africa	AFRC	#AF6458
+Europe	EURP	#736F4C
+America	AMER	#7C7C7C

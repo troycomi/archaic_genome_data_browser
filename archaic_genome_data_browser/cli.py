@@ -51,6 +51,7 @@ def register(app):
                 print(row)
                 db.session.add(SuperPopulation(code=row['code'],
                                                name=row['name'],
+                                               color=row['color'],
                                                data_source=data_source))
         db.session.commit()
 
