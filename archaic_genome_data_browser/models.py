@@ -189,6 +189,38 @@ class ArchaicAnalysisRun(db.Model):
             publication_url = "https://doi.org/{}".foramt(self.publication_doi)
         return publication_url
 
+    @hybrid_property
+    def sampleids_with_data_query(self):
+        return db.session.query(Sample.id).join(ArchaicGenomeData).\
+            join(ArchaicAnalysisRun).\
+            filter(ArchaicAnalysisRun.id == self.id)
+
+    @hybrid_property
+    def samples_with_data_query(self):
+        return Sample.query.filter(
+            Sample.id.in_(self.sampleids_with_data_query))
+
+    @hybrid_property
+    def samples_with_data_count(self):
+        return self.samples_with_data_query.count()
+
+    @hybrid_property
+    def samples_with_data(self):
+        return self.samples_with_data_query.all()
+
+    @hybrid_property
+    def samples_without_data_query(self):
+        return Sample.query.filter(
+            Sample.id.notin_(self.sampleids_with_data_query))
+
+    @hybrid_property
+    def samples_without_data_count(self):
+        return self.samples_without_data_query.count()
+
+    @hybrid_property
+    def samples_without_data(self):
+        return self.samples_without_data_query.all()
+
     def __repr__(self):
         return '<ArchaicAnalysisRun {}>'.format(self.name)
 
