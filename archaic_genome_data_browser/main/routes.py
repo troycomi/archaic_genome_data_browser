@@ -1,4 +1,5 @@
-from flask import render_template, flash, redirect, url_for, jsonify
+import os
+from flask import render_template, flash, redirect, url_for, jsonify, send_file
 from archaic_genome_data_browser import db
 from archaic_genome_data_browser.main import bp
 from archaic_genome_data_browser.main.forms import LoginForm
@@ -100,3 +101,15 @@ def population_data(super_population_data_source_id):
             },
         })
     return jsonify(geojson)
+
+
+@bp.route('/archaic_genome_data_bed_file/<id>')
+def archaic_genome_data_bed_file(id):
+    archaic_genome_data = ArchaicGenomeData.query.filter_by(id=id).\
+        first_or_404()
+    return send_file(archaic_genome_data.bed_file, as_attachment=True)
+
+
+@bp.app_template_filter('basename')
+def basename(path):
+    return os.path.basename(path)
