@@ -14,3 +14,5 @@ dependencies:
     - python-dotenv
     - python-dateutil
     - pyyaml
+    - pybedtools
+    - python-slugify

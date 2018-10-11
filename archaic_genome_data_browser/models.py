@@ -200,20 +200,22 @@ class ArchaicGenomeData(db.Model):
     archaic_analysis_run_id = db.Column(
         db.Integer, db.ForeignKey('archaic_analysis_run.id'),
         nullable=False)
+    archaic_genome_call = db.Column(db.String(128), nullable=False, index=True)
+    haplotype = db.Column(db.Integer, nullable=False)
     __table_args__ = (
-        db.Index('idx_sample_run', 'sample_id',
-                 'archaic_analysis_run_id', unique=True),
+        db.Index('idx_sample_run_genome_haplotype', 'sample_id',
+                 'archaic_analysis_run_id', 'archaic_genome_call',
+                 'haplotype', unique=True),
     )
-    neandertal_bp = db.Column(db.Integer)
-    neandertal_haplotypes = db.Column(db.Integer)
-    neandertal_sstar_bed = db.Column(db.String(512))
-    denisovan_bp = db.Column(db.Integer)
-    denisovan_haplotypes = db.Column(db.Integer)
-    denisovan_sstar_bed = db.Column(db.String(512))
+
+    bed_file = db.Column(db.String(512), nullable=False)
+    total_bps = db.Column(db.Integer, nullable=False)
+    total_haplotypes = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return '<ArchaicGenomeData {}:{}>'.format(
-            self.sample.code, self.archaic_analysis_run.name)
+        return '<ArchaicGenomeData {}:{}:{}:{}>'.format(
+            self.sample.code, self.archaic_analysis_run.name,
+            self.archaic_genome_call, self.haplotype)
 
 
 def get_one_or_create(session, model, create_method='',

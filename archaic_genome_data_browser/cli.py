@@ -1,14 +1,15 @@
 import csv
 import click
-import sys
+import os
 import yaml
 from dateutil.parser import parse
 from archaic_genome_data_browser import db
 from archaic_genome_data_browser.models import (SuperPopulation, Population,
                                                 Sample, ArchaicAnalysisRun,
-                                                ArchaicGenomeData, DataSource,
+                                                DataSource,
                                                 DigitalObjectIdentifier,
                                                 get_one_or_create)
+from archaic_genome_data_browser.main import statistics
 
 
 def register(app):
@@ -129,29 +130,43 @@ def register(app):
         db.session.commit()
 
     @load_data.command()
-    @click.argument('filename')
     @click.argument('analysis_run_name')
-    def archaic_genome_data(filename, analysis_run_name):
+    def archaic_genome_data(analysis_run_name):
         """Import archaic genome analysis data for specified analysis run"""
+        data_dir = app.config['DATA_DIR']
         analysis_run = ArchaicAnalysisRun.query.filter_by(
             name=analysis_run_name).one()
-        print("Importing archaic genome data from '{}'".format(filename))
-        print("Using archaic analysis run: {}".format(analysis_run))
-        with open(filename) as file:
-            csvreader = csv.DictReader(file, delimiter=' ')
-            for row in csvreader:
-                print(row)
-                sample = Sample.query.filter_by(code=row['ind']).first()
-                if sample is None:
-                    sys.stderr.write("Unable to find sample '{}'\n".
-                                     format(row['ind']))
-                    continue
-                print(analysis_run)
-                print(sample)
-                genome_data = ArchaicGenomeData(
-                    sample=sample,
-                    archaic_analysis_run=analysis_run,
-                    neandertal_bp=row['neand'],
-                    denisovan_bp=row['den'])
-                db.session.add(genome_data)
-        db.session.commit()
+        print("Importing archaic analysis genome data for run: {}"
+              .format(analysis_run))
+        analysis_run_dir = os.path.join(
+            data_dir, statistics.directory_for_archaic_analysis_run_bed_file(
+                analysis_run.id))
+        for sample in Sample.query.all():
+            for genome_call in ('neand', 'den', 'ambig', 'null'):
+                for haplotype in (1, 2):
+                    filename = statistics.\
+                        filename_for_archaic_genome_data_bedfile(
+                            sample_id=sample.id,
+                            archaic_genome_call=genome_call,
+                            haplotype=haplotype)
+                    filepath = os.path.join(analysis_run_dir, filename)
+                    print("Checking for file: {}".format(filepath), end='')
+                    if (os.path.exists(filepath)):
+                        statistics.add_archaic_genome_data_from_bed_file(
+                            session=db.session,
+                            sample_id=sample.id,
+                            archaic_analysis_run_id=analysis_run.id,
+                            archaic_genome_call=genome_call,
+                            haplotype=haplotype,
+                            bed_file_name=filepath
+                        )
+                        print(" - added")
+                    else:
+                        print(" - not found")
+
+    @load_data.command()
+    @click.argument('filename')
+    def parse_bed_file(filename):
+        """Load bed file"""
+        stats = statistics.parse_bed_file(filename)
+        print(stats)

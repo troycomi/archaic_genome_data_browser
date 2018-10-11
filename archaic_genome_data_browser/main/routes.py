@@ -37,9 +37,6 @@ def login():
 @bp.route('/superpopulation/<id>')
 def super_population(id):
     super_population = SuperPopulation.query.filter_by(id=id).first_or_404()
-    # TODO Implement some average stats function(s)
-    # https://stackoverflow.com/questions/7143235/how-to-use-avg-and-sum-in-sqlalchemy-query
-    # session.query(func.avg(Rating.field2).label('average')).filter(Rating.url==url_string.netloc)
     return render_template('super_population.html',
                            title=super_population.name,
                            super_population=super_population)
@@ -69,10 +66,6 @@ def archaic_analysis_run(id):
         join(Sample).\
         join(ArchaicGenomeData).\
         filter(ArchaicGenomeData.archaic_analysis_run_id == id)
-    # super_populations_query = SuperPopulation.query.join(
-    #     populations_query.subquery(),
-    #     SuperPopulation.populations)
-    # super_populations_with_data = super_populations_query.all()
     populations_with_data = populations_query.all()
 
     return render_template('archaic_analysis_run.html',

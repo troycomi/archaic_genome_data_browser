@@ -13,3 +13,4 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['lparsons@princeton.edu']
+    DATA_DIR = os.environ.get('DATA_DIR') or os.path.join(basedir, 'data')
