@@ -33,9 +33,9 @@
             <tr>
                 <td><a href="{{ url_for('main.archaic_analysis_run', id=archaic_genome_data.archaic_analysis_run.id) }}">{{ archaic_genome_data.archaic_analysis_run.name }}</a></td>
                 <td>{{ archaic_genome_data.archaic_genome_call }}</td>
-                <td>{{ archaic_genome_data.haplotype }}</td>
-                <td>{{ "{:,}".format(archaic_genome_data.total_bps) }}</a></td>
-                <td>{{ "{:,}".format(archaic_genome_data.total_haplotypes) }}</a></td>
+                <td>{% if archaic_genome_data.haplotype == 0 %}combined{% else %}{{ archaic_genome_data.haplotype }}{% endif %}</td>
+                <td>{{ "{:,}".format(archaic_genome_data.total_bps) }}</td>
+                <td>{{ "{:,}".format(archaic_genome_data.total_haplotypes) }}</td>
                 <td><a href="{{ url_for('main.archaic_genome_data_bed_file', id=archaic_genome_data.id) }}">{{ archaic_genome_data.bed_file | basename }}</a></td>
             </tr>
         {% endfor %}

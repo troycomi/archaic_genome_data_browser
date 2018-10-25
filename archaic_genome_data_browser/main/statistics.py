@@ -5,14 +5,27 @@ from archaic_genome_data_browser.models import (Sample, ArchaicAnalysisRun,
                                                 ArchaicGenomeData)
 
 
-def parse_bed_file(filename):
-    '''Parse bed file and output stastics as dictionary'''
-    bedtool = pybedtools.bedtool.BedTool(filename)
+def parse_bedtool(bedtool):
+    '''Return stats from bedtool'''
     stats = {
         "total_coverage": bedtool.total_coverage(),
         "count": bedtool.count()
     }
     return stats
+
+
+def parse_bed_file(filename):
+    '''Parse bed file and output stastics as dictionary'''
+    bedtool = pybedtools.bedtool.BedTool(filename)
+    return parse_bedtool(bedtool)
+
+
+def merge_bed_files(filename1, filename2, merged_filename):
+    '''Merge intervals of two bed files and get output stastics dictionary'''
+    bedtool1 = pybedtools.bedtool.BedTool(filename1)
+    bedtool2 = pybedtools.bedtool.BedTool(filename2)
+    merged_bedtool = bedtool1.cat(bedtool2)
+    merged_bedtool.saveas(merged_filename)
 
 
 def filename_for_archaic_genome_data_bedfile(sample_id, archaic_genome_call,

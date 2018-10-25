@@ -4,5 +4,6 @@ set -e
 
 flask load-data analysis-runs "data/analysis_runs/analysis_runs.tsv" "Tucci (Unpublished, 2018)"
 
-# flask load-data archaic-genome-data "data/analysis_runs/ALL.amount.n.d.ambig.null.per_ind_Nov9.txt" "tucci_20180915"
+flask load_data archaic_genome_data tucci_20180915
 
+flask load_data generate_merged_haplotype tucci_20180915

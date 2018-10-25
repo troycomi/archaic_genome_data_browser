@@ -165,6 +165,57 @@ def register(app):
                         print(" - not found")
 
     @load_data.command()
+    @click.argument('analysis_run_name')
+    def generate_merged_haplotype(analysis_run_name):
+        """Combine two haplotypes into a "merged" haplotype file"""
+        data_dir = app.config['DATA_DIR']
+        analysis_run = ArchaicAnalysisRun.query.filter_by(
+            name=analysis_run_name).one()
+        print("Importing archaic analysis genome data for run: {}"
+              .format(analysis_run))
+        analysis_run_dir = os.path.join(
+            data_dir, statistics.directory_for_archaic_analysis_run_bed_file(
+                analysis_run.id))
+        for sample in Sample.query.all():
+            for genome_call in ('neand', 'den', 'ambig', 'null'):
+                haplotype_1_filepath = os.path.join(
+                    analysis_run_dir, statistics.
+                    filename_for_archaic_genome_data_bedfile(
+                        sample_id=sample.id,
+                        archaic_genome_call=genome_call,
+                        haplotype=1))
+                haplotype_2_filepath = os.path.join(
+                    analysis_run_dir, statistics.
+                    filename_for_archaic_genome_data_bedfile(
+                        sample_id=sample.id,
+                        archaic_genome_call=genome_call,
+                        haplotype=2))
+                haplotype_0_filepath = os.path.join(
+                    analysis_run_dir, statistics.
+                    filename_for_archaic_genome_data_bedfile(
+                        sample_id=sample.id,
+                        archaic_genome_call=genome_call,
+                        haplotype=0))
+                print("Merging haplotype 1 and 2 for sample {}:{}".format(
+                    sample.code, genome_call), end='')
+                try:
+                    statistics.merge_bed_files(haplotype_1_filepath,
+                                               haplotype_2_filepath,
+                                               haplotype_0_filepath)
+                    statistics.add_archaic_genome_data_from_bed_file(
+                        session=db.session,
+                        sample_id=sample.id,
+                        archaic_analysis_run_id=analysis_run.id,
+                        archaic_genome_call=genome_call,
+                        haplotype=0,
+                        bed_file_name=haplotype_0_filepath
+                    )
+                    print(" - done")
+                except ValueError as e:
+                    print("{} - skipped".format(e))
+                    continue
+
+    @load_data.command()
     @click.argument('filename')
     def parse_bed_file(filename):
         """Load bed file"""
