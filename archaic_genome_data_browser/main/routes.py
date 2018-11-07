@@ -1,4 +1,5 @@
-from flask import render_template, flash, redirect, url_for, jsonify
+import os
+from flask import render_template, flash, redirect, url_for, jsonify, send_file
 from archaic_genome_data_browser import db
 from archaic_genome_data_browser.main import bp
 from archaic_genome_data_browser.main.forms import LoginForm
@@ -37,9 +38,6 @@ def login():
 @bp.route('/superpopulation/<id>')
 def super_population(id):
     super_population = SuperPopulation.query.filter_by(id=id).first_or_404()
-    # TODO Implement some average stats function(s)
-    # https://stackoverflow.com/questions/7143235/how-to-use-avg-and-sum-in-sqlalchemy-query
-    # session.query(func.avg(Rating.field2).label('average')).filter(Rating.url==url_string.netloc)
     return render_template('super_population.html',
                            title=super_population.name,
                            super_population=super_population)
@@ -69,10 +67,6 @@ def archaic_analysis_run(id):
         join(Sample).\
         join(ArchaicGenomeData).\
         filter(ArchaicGenomeData.archaic_analysis_run_id == id)
-    # super_populations_query = SuperPopulation.query.join(
-    #     populations_query.subquery(),
-    #     SuperPopulation.populations)
-    # super_populations_with_data = super_populations_query.all()
     populations_with_data = populations_query.all()
 
     return render_template('archaic_analysis_run.html',
@@ -107,3 +101,15 @@ def population_data(super_population_data_source_id):
             },
         })
     return jsonify(geojson)
+
+
+@bp.route('/archaic_genome_data_bed_file/<id>')
+def archaic_genome_data_bed_file(id):
+    archaic_genome_data = ArchaicGenomeData.query.filter_by(id=id).\
+        first_or_404()
+    return send_file(archaic_genome_data.bed_file, as_attachment=True)
+
+
+@bp.app_template_filter('basename')
+def basename(path):
+    return os.path.basename(path)

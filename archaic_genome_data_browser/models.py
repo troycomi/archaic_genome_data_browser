@@ -189,6 +189,38 @@ class ArchaicAnalysisRun(db.Model):
             publication_url = "https://doi.org/{}".foramt(self.publication_doi)
         return publication_url
 
+    @hybrid_property
+    def sampleids_with_data_query(self):
+        return db.session.query(Sample.id).join(ArchaicGenomeData).\
+            join(ArchaicAnalysisRun).\
+            filter(ArchaicAnalysisRun.id == self.id)
+
+    @hybrid_property
+    def samples_with_data_query(self):
+        return Sample.query.filter(
+            Sample.id.in_(self.sampleids_with_data_query))
+
+    @hybrid_property
+    def samples_with_data_count(self):
+        return self.samples_with_data_query.count()
+
+    @hybrid_property
+    def samples_with_data(self):
+        return self.samples_with_data_query.all()
+
+    @hybrid_property
+    def samples_without_data_query(self):
+        return Sample.query.filter(
+            Sample.id.notin_(self.sampleids_with_data_query))
+
+    @hybrid_property
+    def samples_without_data_count(self):
+        return self.samples_without_data_query.count()
+
+    @hybrid_property
+    def samples_without_data(self):
+        return self.samples_without_data_query.all()
+
     def __repr__(self):
         return '<ArchaicAnalysisRun {}>'.format(self.name)
 
@@ -200,20 +232,22 @@ class ArchaicGenomeData(db.Model):
     archaic_analysis_run_id = db.Column(
         db.Integer, db.ForeignKey('archaic_analysis_run.id'),
         nullable=False)
+    archaic_genome_call = db.Column(db.String(128), nullable=False, index=True)
+    haplotype = db.Column(db.Integer, nullable=False)
     __table_args__ = (
-        db.Index('idx_sample_run', 'sample_id',
-                 'archaic_analysis_run_id', unique=True),
+        db.Index('idx_sample_run_genome_haplotype', 'sample_id',
+                 'archaic_analysis_run_id', 'archaic_genome_call',
+                 'haplotype', unique=True),
     )
-    neandertal_bp = db.Column(db.Integer)
-    neandertal_haplotypes = db.Column(db.Integer)
-    neandertal_sstar_bed = db.Column(db.String(512))
-    denisovan_bp = db.Column(db.Integer)
-    denisovan_haplotypes = db.Column(db.Integer)
-    denisovan_sstar_bed = db.Column(db.String(512))
+
+    bed_file = db.Column(db.String(512), nullable=False)
+    total_bps = db.Column(db.Integer, nullable=False)
+    total_haplotypes = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return '<ArchaicGenomeData {}:{}>'.format(
-            self.sample.code, self.archaic_analysis_run.name)
+        return '<ArchaicGenomeData {}:{}:{}:{}>'.format(
+            self.sample.code, self.archaic_analysis_run.name,
+            self.archaic_genome_call, self.haplotype)
 
 
 def get_one_or_create(session, model, create_method='',

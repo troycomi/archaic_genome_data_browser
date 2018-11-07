@@ -15,3 +15,5 @@ dependencies:
     - python-dateutil
     - pyyaml
     - pytest
+    - pybedtools
+    - python-slugify

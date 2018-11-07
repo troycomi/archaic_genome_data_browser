@@ -9,29 +9,24 @@
         <a href="{{ archaic_analysis_run.publication_url }}">{{ archaic_analysis_run.publication_doi }}</a>
     {% endif %}
     </td>
-    <h3>Populations with run data</h3>
+    <dl>
+        <dt>Samples with data</dt>
+        <dd>{{ archaic_analysis_run.samples_with_data_count }}</dd>
+        <dt>Samples missing data</dt>
+        <dd>{{ archaic_analysis_run.samples_without_data_count }}</dd>
+    </dl>
+    <h3>Samples with run data</h3>
     <table class="table table-hover">
         <tr>
             <th>Code</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Samples with run data</th>
-            <th>Avg Neadertal BPs</th>
-            <th>Avg Neadertal Haplotypes</th>
-            <th>Avg Denisovan BPs</th>
-            <th>Avg Denisovan Haplotypes</th>
+            <th>Family Code</th>
+            <th>Population</th>
         </tr>
-        {% for population in populations %}
-        {% set avg_archaic_genome_stats = population.avg_archaic_genome_stats(archaic_analysis_run.id) %}
+        {% for sample in archaic_analysis_run.samples_with_data %}
             <tr>
-                <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.code }}</a></td>
-                <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.name }}</a></td>
-                <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.description }}</a></td>
-                <td>{{ population.samples_with_data_for_run(archaic_analysis_run.id) | length }}</td>
-                <td>{% if avg_archaic_genome_stats['neandertal_bp_avg'] %}{{ "{:,.0f}".format(avg_archaic_genome_stats['neandertal_bp_avg']) }}{% endif %}</td>
-                <td>{% if avg_archaic_genome_stats['neandertal_haplotypes_avg'] %}{{ "{:,.0f}".format(avg_archaic_genome_stats['neandertal_haplotypes_avg']) }}{% endif %}</td>
-                <td>{% if avg_archaic_genome_stats['denisovan_bp_avg'] %}{{ "{:,.0f}".format(avg_archaic_genome_stats['denisovan_bp_avg']) }}{% endif %}</td>
-                <td>{% if avg_archaic_genome_stats['denisovan_haplotypes_avg'] %}{{ "{:,.0f}".format(avg_archaic_genome_stats['denisovan_haplotypes_avg']) }}{% endif %}</td>
+                <td><a href="{{ url_for('main.sample', id=sample.id)}}">{{ sample.code }}</a></td>
+                <td>{{ sample.family_code }}</td>
+                <td><a href="{{ url_for('main.population', id=sample.population.id)}}">{{ sample.population.code }}</a></td>
             </tr>
         {% endfor %}
     </table>
