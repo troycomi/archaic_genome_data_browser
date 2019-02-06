@@ -211,7 +211,7 @@ def register(app):
                         bed_file_name=haplotype_0_filepath
                     )
                     print(" - done")
-                except ValueError as e:
+                except (ValueError, FileNotFoundError) as e:
                     print("{} - skipped".format(e))
                     continue
 
