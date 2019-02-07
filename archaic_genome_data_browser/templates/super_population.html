@@ -24,36 +24,40 @@
     <h3>Archaic Analysis Runs</h3>
     <table class="table table-hover">
         <tr>
+            <th>Population</th>
             <th>Run</th>
             <th>Avg Neadertal BPs</th>
-            <th>Avg Neadertal Haplotypes</th>
+            <th>Avg Neadertal Regions</th>
             <th>Avg Denisovan BPs</th>
-            <th>Avg Denisovan Haplotypes</th>
+            <th>Avg Denisovan Regions</th>
         </tr>
-        {% for archaic_analysis_run in archaic_analysis_runs %}
-        {% set data = archaic_analysis_data.get(archaic_analysis_run.id) %}
-            <tr>
-                <td><a href="{{ url_for('main.archaic_analysis_run', id=archaic_analysis_run.id)}}">{{ archaic_analysis_run.name }}</a></td>
-                <td>{{ "%.2f"|format(data['neandertal_bp']) }}
-                <td>{% if data['neandertal_haplotypes'] %}
-                        {{ "%.2f"|format(data['neandertal_haplotypes']|float) }}
-                    {% else %}
-                        {{ data['neandertal_haplotypes'] }}
-                    {% endif %}
-                </td>
-                <td>{% if data['denisovan_bp'] %}
-                        {{ "%.2f"|format(data['denisovan_bp']|float) }}
-                    {% else %}
-                        {{ data['denisovan_bp'] }}
-                    {% endif %}
-                </td>
-                <td>{% if data['denisovan_haplotypes'] %}
-                        {{ "%.2f"|format(data['denisovan_haplotypes']|float) }}
-                    {% else %}
-                        {{ data['denisovan_haplotypes'] }}
-                    {% endif %}
-                </td>
-            </tr>
+        {% for population in super_population.populations %}
+            {% for archaic_analysis_run in archaic_analysis_runs %}
+            {% set data = archaic_analysis_run.get_statistics(population.id) %}
+                <tr>
+                    <td><a href="{{ url_for('main.population', id=population.id)}}">{{ population.name }}</a></td>
+                    <td><a href="{{ url_for('main.archaic_analysis_run', id=archaic_analysis_run.id)}}">{{ archaic_analysis_run.name }}</a></td>
+                    <td>{{ "%.2f"|format(data['neandertal_bp']) }}
+                    <td>{% if data['neandertal_haplotypes'] %}
+                            {{ "%.2f"|format(data['neandertal_haplotypes']|float) }}
+                        {% else %}
+                            {{ data['neandertal_haplotypes'] }}
+                        {% endif %}
+                    </td>
+                    <td>{% if data['denisovan_bp'] %}
+                            {{ "%.2f"|format(data['denisovan_bp']|float) }}
+                        {% else %}
+                            {{ data['denisovan_bp'] }}
+                        {% endif %}
+                    </td>
+                    <td>{% if data['denisovan_haplotypes'] %}
+                            {{ "%.2f"|format(data['denisovan_haplotypes']|float) }}
+                        {% else %}
+                            {{ data['denisovan_haplotypes'] }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
         {% endfor %}
     </table>
 {% endblock %}

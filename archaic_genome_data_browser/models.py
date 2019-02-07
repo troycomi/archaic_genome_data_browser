@@ -221,6 +221,38 @@ class ArchaicAnalysisRun(db.Model):
     def samples_without_data(self):
         return self.samples_without_data_query.all()
 
+    def get_statistics(self, population_id):
+        sums = db.session.query(ArchaicGenomeData.archaic_genome_call,
+                                ArchaicGenomeData.haplotype,
+                                func.sum(ArchaicGenomeData.total_bps).
+                                label('total_bp'),
+                                func.sum(ArchaicGenomeData.total_haplotypes).
+                                label('total_haplotypes')).\
+            join(Sample).\
+            filter(Sample.population_id == population_id,
+                   ArchaicGenomeData.archaic_analysis_run_id == self.id).\
+            group_by(ArchaicGenomeData.archaic_genome_call,
+                     ArchaicGenomeData.haplotype).all()
+
+        result = {'neandertal_bp': 0,
+                  'neandertal_haplotypes': 0,
+                  'denisovan_bp': 0,
+                  'denisovan_haplotypes': 0,
+                  }
+        total_bp = sum([s[2] for s in sums])
+        total_hap = sum([s[3] for s in sums])
+
+        for s in sums:
+            if s[0] == 'den':
+                result['denisovan_bp'] += s[2]/total_bp
+                result['denisovan_haplotypes'] += s[3]/total_hap
+
+            elif s[0] == 'neand':
+                result['neandertal_bp'] += s[2]/total_bp
+                result['neandertal_haplotypes'] += s[3]/total_hap
+
+        return result
+
     def __repr__(self):
         return '<ArchaicAnalysisRun {}>'.format(self.name)
 

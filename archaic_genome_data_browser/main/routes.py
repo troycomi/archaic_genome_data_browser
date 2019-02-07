@@ -38,9 +38,12 @@ def login():
 @bp.route('/superpopulation/<id>')
 def super_population(id):
     super_population = SuperPopulation.query.filter_by(id=id).first_or_404()
+    analysis_runs = ArchaicAnalysisRun.query.filter_by(
+        data_source_id=super_population.data_source_id)
     return render_template('super_population.html',
                            title=super_population.name,
-                           super_population=super_population)
+                           super_population=super_population,
+                           archaic_analysis_runs=analysis_runs)
 
 
 @bp.route('/population/<id>')
